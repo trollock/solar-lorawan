@@ -1,0 +1,300 @@
+---
+title: "TTFF / Warm Fixes"
+author: "Ryan Shipley"
+date: '2023-05-03'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+require(readr)
+require(tidyverse)
+require(ggplot2)
+```
+
+```{r, include=FALSE}
+df <- list.files(path="//Users/ryanshipley/Documents/Research/2023_CMWX_Radiotags/Data", full.names = TRUE) %>% 
+  lapply(read_csv) %>% 
+  bind_rows %>%
+  dplyr::mutate(time_stamp = lubridate::ymd_hms(message_time)) %>%
+  dplyr::distinct(time_stamp, .keep_all=TRUE) %>%
+  dplyr::filter(latitude > 0)
+```
+
+```{r}
+df <- df %>%
+  group_by(id) %>%
+  arrange(message_time, .by_group = TRUE) %>%
+  mutate(time_to_fix = message_time - lag(message_time, default = first(message_time)))
+         
+df$time_to_fix <- as.numeric(df$time_to_fix)
+
+df$interval <- 
+  ifelse (df$time_to_fix > 600 & df$time_to_fix < 800, 
+      10,
+  ifelse(df$time_to_fix > 1200 & df$time_to_fix < 1400, 
+      20,
+  ifelse (df$time_to_fix > 1800 & df$time_to_fix < 2000,
+      30,
+  ifelse (df$time_to_fix > 3600 & df$time_to_fix < 3900,
+      60,
+  ifelse (df$time_to_fix > 7200 & df$time_to_fix < 7400,
+      120,
+  ifelse (df$time_to_fix > 10800 & df$time_to_fix < 11200,
+      180,
+  ifelse (df$time_to_fix > 21600 & df$time_to_fix < 21800,
+      360,
+      NA)))))))
+
+df$time_to_fix <- 
+  ifelse (df$time_to_fix > 600 & df$time_to_fix < 800, 
+      df$time_to_fix - 600,
+  ifelse(df$time_to_fix > 1200 & df$time_to_fix < 1400, 
+      df$time_to_fix - 1200,
+  ifelse (df$time_to_fix > 1800 & df$time_to_fix < 2000,
+      df$time_to_fix - 1800,
+  ifelse (df$time_to_fix > 3600 & df$time_to_fix < 3900,
+      df$time_to_fix - 3600,
+  ifelse (df$time_to_fix > 7200 & df$time_to_fix < 7400,
+      df$time_to_fix - 7200,
+  ifelse (df$time_to_fix > 10800 & df$time_to_fix < 11200,
+      df$time_to_fix - 10800,
+  ifelse (df$time_to_fix > 21600 & df$time_to_fix < 21800,
+      df$time_to_fix - 21600,
+      NA)))))))
+
+df <- df %>%
+      filter(time_to_fix < 180)
+```
+
+```{r}
+ggplot(df, aes(as.factor(hdop),time_to_fix))+
+  geom_boxplot()
+```
+
+
+```{r}
+fix_summary <- df %>%
+            group_by(interval) %>%
+            summarize(n = n(), mean = mean(time_to_fix, na.rm=T), sd = sd(time_to_fix, na.rm=T))
+```
+
+```{r}
+require(sf)
+
+start <- data.frame(lat = c(46.83353642366947),
+                    lon = c(8.182752723850907)) %>% 
+  sf::st_as_sf(coords = c("lon", "lat"), crs = 4326)
+
+df <- df %>%
+        sf::st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+
+distance <- data.frame(distance = t(sf::st_distance(start, df, by_element = FALSE)))
+
+df <- cbind(df, distance)
+
+acc_summary <- df %>%
+            group_by(hdop) %>%
+            summarize(n = n(), mean = mean(distance, na.rm=T), sd = sd(distance, na.rm=T)) 
+
+centroid_summary <- df %>%
+            group_by(hdop) %>%
+            summarize(geometry = st_union(geometry)) %>% 
+            st_centroid
+
+cents <- as.data.frame(st_coordinates(centroid_summary))
+
+centroid_summary <- cbind(centroid_summary, cents)
+
+centroid_distance <- data.frame(distance = t(sf::st_distance(start, centroid_summary, by_element = FALSE)))
+
+
+```
+
+```{r}
+start2 <- st_transform(start, crs = 28992)
+start2 <- as.data.frame(st_coordinates(start2))
+
+df2 <- st_transform(df, crs = 28992)
+df2 <- as.data.frame(st_coordinates(df2))
+
+df2$X <- df2$X - start2$X
+df2$Y <- df2$Y - start2$Y
+ 
+df <- cbind(df, df2)
+```
+
+```{r}
+require(ggdensity)
+require(ggforce)
+library(magrittr)
+
+# constants
+axis_begin  <- -350
+axis_end    <- 350
+total_ticks <- 11
+
+# chart junk data
+tick_frame <- 
+  data.frame(ticks = seq(axis_begin, axis_end, length.out = total_ticks), 
+             zero=0) %>%
+  subset(ticks != 0)
+
+lab_frame <- data.frame(lab = seq(axis_begin, axis_end, length.out = total_ticks),
+                        zero = 0) %>%
+  subset(lab != 0)
+
+tick_sz <- (tail(lab_frame$lab, 1) -  lab_frame$lab[1]) / 128
+
+```
+
+```{r}
+ggplot(df, aes(X,Y)) + 
+    # CHART JUNK
+  # y axis line
+  geom_segment(x = 0, xend = 0, 
+               y = lab_frame$lab[1], yend = tail(lab_frame$lab, 1),
+               size = 0.25, color="grey90") +
+  # x axis line
+  geom_segment(y = 0, yend = 0, 
+               x = lab_frame$lab[1], xend = tail(lab_frame$lab, 1),
+               size = 0.25, color="grey90") +
+  # x ticks
+  geom_segment(data = tick_frame, 
+               aes(x = ticks, xend = ticks, 
+                   y = zero, yend = zero + tick_sz), color="grey90") +
+  # y ticks
+  geom_segment(data = tick_frame, 
+               aes(x = zero, xend = zero + tick_sz, 
+                   y = ticks, yend = ticks), color="grey90") + 
+  geom_circle(aes(x0 = 0, y0 = 0, r = 140), inherit.aes = FALSE, color="grey90", linetype="dotted") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 210), inherit.aes = FALSE,  color="grey90", linetype="dotted") +
+  geom_circle(aes(x0 = 0, y0 = 0, r = 280), inherit.aes = FALSE,  color="grey90", linetype="dotted") +
+  geom_point(size=0.01, color="grey50") +
+  geom_hdr_lines(data=df[ which(df$hdop == 30), ],  method="freqpoly",  aes(X,Y), color="#440154", size=0.5, probs=0.90, n=500, alpha=0.75) +
+  geom_hdr_lines(data=df[ which(df$hdop == 20), ],  method="freqpoly",  aes(X,Y), color="#29af7f", size=0.5, probs=0.90, n=500, alpha=0.75) +
+  geom_hdr_lines(data=df[ which(df$hdop == 10), ], method="freqpoly",  aes(X,Y), color="#FDE725", size=0.5, probs=0.90, n=500, alpha=0.75) +
+  theme_void()+
+  coord_fixed(xlim=c(-350, 350), ylim=c(-350, 350)) +
+    # labels
+  geom_text(data=lab_frame, aes(x=lab, y=zero, label=lab),
+            family = 'Arial', vjust=1.5, color="grey70") +
+  geom_text(data=lab_frame, aes(x=zero, y=lab, label=lab),
+            family = 'Arial', hjust=1.25, color="grey70")
+```
+
+```{r}
+setwd("//Users/ryanshipley/Documents/Research/2023_CMWX_Radiotags/Lab_Light_Measurements")
+
+irr <- read.csv("irradiance.csv")
+
+irr_mdl <- glm(Power ~ Irradiance, data=irr)
+
+energy_plot <- ggplot(data=irr, aes(Power / 1000, Irradiance)) +
+  geom_smooth(se=FALSE, color="grey80", size=0.5) +
+  geom_jitter(size=0.2)+
+  cowplot::theme_cowplot() +
+  ylab(expression(Irradiance ~ W/m^-2)) +
+  xlab ("Charge Current (mA)") +
+  scale_x_log10()+
+  scale_y_log10()+
+  annotation_logticks()+
+  geom_hline(yintercept = 75, linetype="dotted", color="grey80") + 
+  geom_hline(yintercept = 175, linetype="dotted", color="grey80") + 
+  geom_hline(yintercept = 500, linetype="dotted", color="grey80")
+
+energy_plot
+
+```
+
+```{r}
+# install and load the solrad package
+#install.packages("solrad")
+library(solrad)
+
+DOY <- seq(-1, 365, .01)
+
+# define the latitude range
+lat_range <- seq(-90, 90, by = 0.5)
+
+# loop over latitudes to calculate irradiance for each time step
+irradiance_data <- lapply(lat_range, function(lat) {
+  radiation <- OpenRadiation(DOY, Lat = lat, Lon=0, SLon=0, DS=0, Elevation = 100)
+})
+
+# combine the results into a matrix
+#irradiance_matrix <- matrix(do.call(cbind, irradiance_data))
+
+#irradiance_matrix <- oce::matrixSmooth(irradiance_matrix, 500)
+
+irradiance_matrix <- as.data.frame(do.call(cbind, irradiance_data))
+
+# set the row names as latitude values
+row.names(irradiance_matrix) <- DOY
+
+# set the column names as datetime values
+colnames(irradiance_matrix) <- lat_range
+
+irradiance_matrix <- cbind(DOY, irradiance_matrix)
+
+irradiance_matrix <- reshape2::melt(irradiance_matrix, id=c("DOY"))
+
+irradiance_matrix$DOY_bin <- ceiling(irradiance_matrix$DOY)
+
+irradiance_summary <- irradiance_matrix %>%
+                        dplyr::group_by(DOY_bin, variable) %>%
+                        dplyr::summarize(mean = mean (value, na.rm=T)) %>%
+                        dplyr::filter(DOY_bin > 0) %>%
+                        dplyr::filter(mean > 0)
+
+irradiance_summary <- irradiance_summary %>%
+                        pivot_wider(names_from = variable, values_from = mean)
+
+irradiance_summary <- as.matrix(irradiance_summary[, -1])
+
+irradiance_summary <- oce::matrixSmooth(irradiance_summary, 3)
+
+colnames(irradiance_summary) <- lat_range
+
+irradiance_summary <- as.data.frame(cbind(DOY = seq(1,365, 1), irradiance_summary))
+
+irradiance_summary <- reshape2::melt(irradiance_summary, id=c("DOY"))
+
+irradiance_summary <- irradiance_summary %>%
+                        dplyr::filter(!is.na(value))
+
+irradiance_summary$variable <- as.numeric(levels(irradiance_summary$variable))[irradiance_summary$variable]
+```
+
+
+```{r}
+cold_fix_mean <- 45
+
+irradiance_summary$harv_30 <- ifelse(irradiance_summary$value == 0, 0, ((irr_mdl$coefficients[2] * (irradiance_summary$value)) - irr_mdl$coefficients[1]) * 0.3)
+irradiance_summary$time_fx_30 <- ifelse(irradiance_summary$harv_30 == 0, 0, 1440 / (((cold_fix_mean * 32000) / irradiance_summary$harv_30 ) / 60 ))
+ 
+irradiance_summary$harv_05 <- ifelse(irradiance_summary$value == 0, 0, ((irr_mdl$coefficients[2] * (irradiance_summary$value)) - irr_mdl$coefficients[1]) * 0.05)
+irradiance_summary$time_fx_05 <- ifelse(irradiance_summary$harv_05 == 0, 0, 1440 / (((cold_fix_mean * 32000) / irradiance_summary$harv_05 ) / 60 ))
+
+  
+duty_01_plot <- ggplot(irradiance_summary, aes(DOY, variable, z=time_fx_05)) +
+                geom_raster(fill="white", color="white") +
+                #geom_contour(aes(colour = after_stat(level))) +
+                metR::geom_contour2(aes(z = time_fx_05, label = stat(level), colour = after_stat(level)), breaks=c(6,8,10,12,14,16,18,20,22,24,26)) +
+  scale_colour_viridis_c() + 
+                cowplot::theme_cowplot() +
+                xlab("Day of Year") +
+                ylab( "Latitude") +
+  theme(legend.position = "none") +
+  scale_y_continuous(expand = c(0,0), breaks=c(-90, -60, -30, 0 , 30, 60, 90)) +
+  scale_x_continuous(expand = c(0,0), breaks=c(1, 60, 120, 180, 240, 300, 360)) +
+  theme(panel.background = element_rect(fill = 'grey80', colour = 'grey80'))
+
+duty_01_plot
+```
+
+```{r}
+cowplot::plot_grid(energy_plot, duty_01_plot, align = 'h')
+```
+
