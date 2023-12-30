@@ -14,6 +14,10 @@ The following repository contains all of the necessary hardware, software, TTN i
     
 # 2. Programming 
 
+- programmed using a combination of Arduino, STMCubeProgrammer, and an ST-Link. 
+- built on the Arduino core found here https://github.com/GrumpyOldPizza/ArduinoCore-stm32l0
+- 
+
 # 3. 3D Printed Housing
 
 - design files for 3D printed housings found in subfolder https://github.com/trollock/solar-lorawan/tree/main/6_housings
