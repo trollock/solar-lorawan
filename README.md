@@ -14,9 +14,22 @@ The following repository contains all of the necessary hardware, software, TTN i
     
 # 2. Programming 
 
-- programmed using a combination of Arduino, STMCubeProgrammer, and an ST-Link. 
+- programmed using a combination of Arduino, STM32CubeProgrammer, and an ST-Link.
+  + *.elf files are first generated in Arduino, then loaded into STM32CubeProgrammer connected via an ST-Link 
 - built on the Arduino core found here https://github.com/GrumpyOldPizza/ArduinoCore-stm32l0
-- 
+  + comfirmed using a Mac running macOS Big Sur
+- basic arduino example found in subfolder XXXX
+  + can be modified and them compiled
+
+- Basic programming example
+  + open the basic arduino example
+  + click "verify" and then find path to location of *.elf file
+  + before opening STM32CubePorgrammer, connect the ST-Link to a suitable port
+    + confirm the ST-Link is connected in STM32CubeProgrammer in the upper right under "ST-Link configuration"
+  + provide 3.3v power to the device and click "Connect" in STM32CubeProgrammer
+  + click "Open File" in STM32CubeProgrammer and find the location of the *.elf file generated earlier by Arduino
+  + click "Download" in STM32CubeProgrammer and wait ~ 2-3 seconds until finished 
+  + click "Disconnect" in STM32CubeProgrammer
 
 # 3. 3D Printed Housing
 
