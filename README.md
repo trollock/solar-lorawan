@@ -14,6 +14,8 @@ The following repository contains all of the necessary hardware, software, TTN i
     
 # 2. Programming 
 
+![image3](https://github.com/trollock/solar-lorawan/assets/11556670/c9345875-1c5f-4257-aaa9-741a5b0408fa)
+
 - programmed using a combination of Arduino, STM32CubeProgrammer, and an ST-Link.
   + *.elf files are first generated in Arduino, then loaded into STM32CubeProgrammer connected via an ST-Link 
 - built on the Arduino core found here https://github.com/GrumpyOldPizza/ArduinoCore-stm32l0
@@ -42,3 +44,5 @@ The following repository contains all of the necessary hardware, software, TTN i
 # 5. Data compression algorithm
 
 # 6. Data Access
+
+- files for accessing stored
