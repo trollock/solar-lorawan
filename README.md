@@ -44,8 +44,13 @@ The following repository contains all of the necessary hardware, software, TTN i
 - basic arduino example found in subfolder XXXX
   + can be modified and them compiled
 
+- Open the default example in Arduino IDE found in subfolder XXXX 
+- Copy and paste the correct JoinEUI, DevEUI, and AppKEY created earlier under "_Registering a new device_"
+
+<img width="1018" alt="Screen Shot 2023-12-31 at 7 35 50 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/dd22c578-f315-43bc-a63c-640bd3040f52">
+
 - Basic programming example
-  + open the basic arduino example
+  + open the basic arduino example with the correct JoinEUI, DevEUI, and AppKEY created earlier under "_Registering a new device_"
   + click "verify" and then find path to location of *.elf file
   + before opening STM32CubePorgrammer, connect the ST-Link to a suitable port
     + confirm the ST-Link is connected in STM32CubeProgrammer in the upper right under "ST-Link configuration"
