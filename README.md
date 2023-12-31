@@ -1,6 +1,6 @@
 # Repository Introduction
 
-The following repository contains all of the necessary hardware, software, TTN interface, 3D printing files, and assemble instructions for the CMWX-based LoRaWAN GPS radiotransmitter.
+The following repository contains all of the necessary hardware, software, TTN interface, 3D printing files, and assembly instructions for the CMWX-based LoRaWAN GPS radiotransmitter.
 
 # 1. Hardware 
 
