@@ -26,8 +26,11 @@ The following repository contains all of the necessary hardware, software, TTN i
   + Click the LoRaWAN version "_LoRaWAN Specification 1.0.2_"
   + Click the Regional Parameters version "_RP001 Regional Parameters 1.0.2 revision B_"
   + Create a unique 64 bit JoinEUI for your device (can be shared amongst devices, can be random)
+    + Copy this to add to the Arduino example file  
   + Click "_Generate_" to create a 64-bit random DevEUI
+    + Copy this to add to the Arduino example file  
   + Click "_Generate_" to create a 128-bit random AppKEY (can be shared amongst devices)
+    + Copy this to add to the Arduino example file  
   + Click "_Register End Device_" to create your new device
 
 <img width="818" alt="Screen Shot 2023-12-31 at 3 21 52 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/91a278fa-6ada-405c-8e89-6b2317f81165">
