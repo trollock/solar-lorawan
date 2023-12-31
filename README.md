@@ -18,7 +18,7 @@ The following repository contains all of the necessary hardware, software, TTN i
 
 - Example based on connecting to The Things Network (TTN) for Europe EU868 Band
 - Create a free TTN User account (not the Things Stack)
-  + Become familiar with the basics of LoRaWAN https://www.thethingsnetwork.org/docs/lorawan/
+  + Become familiar with the basics of LoRa and LoRaWAN https://www.thethingsnetwork.org/docs/lorawan/
 
 - Create an application for your devices
 
