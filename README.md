@@ -12,6 +12,8 @@ The following repository contains all of the necessary hardware, software, TTN i
 - production settings:
   + 24.9 x 10.5 mm, 2 layers, 0.4 mm FR4, 0.2 mm min hole size, immersion gold (ENIG) surface finish (1U"), 0.06 mm min track spacing, 1 oz Cu finished copper
 
+<img width="1824" alt="Screen Shot 2023-12-31 at 3 34 29 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/f0d37c17-0bba-4ecb-ad15-4041fab30a62">
+
 # 2. LoRaWAN Network IDs 
 
 - Example based on connecting to The Things Network (TTN) for Europe EU868 Band
@@ -25,12 +27,10 @@ The following repository contains all of the necessary hardware, software, TTN i
   + Click the frequency plan "_Europe 863-870 MHz (SF9 for RX2 - recommended)_"
   + Click the LoRaWAN version "_LoRaWAN Specification 1.0.2_"
   + Click the Regional Parameters version "_RP001 Regional Parameters 1.0.2 revision B_"
-  + Create a unique 64 bit JoinEUI for your device (can be shared amongst devices, can be random)
-    + Copy this to add to the Arduino example file  
+  + Create a unique 64 bit JoinEUI for your device (can be shared amongst devices, can be random)  
   + Click "_Generate_" to create a 64-bit random DevEUI
-    + Copy this to add to the Arduino example file  
   + Click "_Generate_" to create a 128-bit random AppKEY (can be shared amongst devices)
-    + Copy this to add to the Arduino example file  
+    + Keep the JoinEUI, DevEUI, and AppKEY to copy into the Arduino example file  
   + Click "_Register End Device_" to create your new device
 
 <img width="818" alt="Screen Shot 2023-12-31 at 3 21 52 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/91a278fa-6ada-405c-8e89-6b2317f81165">
