@@ -73,12 +73,14 @@ The following repository contains all of the necessary hardware, software, TTN i
 - design files for 3D printed housings found in subfolder https://github.com/trollock/solar-lorawan/tree/main/6_housings
 - printed on Formlabs Form 3+ / 3B+ at a 0.05 mm micron layer height
 - *.stl file sliced in Preform 3.33.1
+  + sample print file with supports provided
 
 - Version A for IXOLAR KXOB based solar cells (with PCB adapter)
 
 ![Housing_A](https://github.com/trollock/solar-lorawan/assets/11556670/72a8ed96-9c64-460b-a734-0ed86e181711)
 
 - Version B for raw GaInAs triple junction solar cells (no adapter necessary)
+
 
 # 5. Assembly
 
