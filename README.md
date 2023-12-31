@@ -30,7 +30,7 @@ The following repository contains all of the necessary hardware, software, TTN i
   + Click "_Generate_" to create a 128-bit random AppKEY (can be shared amongst devices)
   + Click "_Register End Device_" to create your new device
 
-<img width="995" alt="Screen Shot 2023-12-31 at 3 12 34 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/38629716-e348-4e1b-adf1-4c6aebf37acb">
+<img width="818" alt="Screen Shot 2023-12-31 at 3 21 52 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/91a278fa-6ada-405c-8e89-6b2317f81165">
 
 # 3. Programming 
 
