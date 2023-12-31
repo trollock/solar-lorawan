@@ -66,8 +66,9 @@ The following repository contains all of the necessary hardware, software, TTN i
 
 # 5. Assembly
 
-# 6. Data compression algorithm
+# 6. Data Access
 
-# 7. Data Access
+- log into your new TTN account and click on your application
+- 
 
 - files for accessing stored
