@@ -32,6 +32,8 @@ The following repository contains all of the necessary hardware, software, TTN i
   + Click "_Generate_" to create a 128-bit random AppKEY (can be shared amongst devices)
     + Keep the JoinEUI, DevEUI, and AppKEY to copy into the Arduino example file  
   + Click "_Register End Device_" to create your new device
+  
+  + see image below 
 
 <img width="818" alt="Screen Shot 2023-12-31 at 3 21 52 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/91a278fa-6ada-405c-8e89-6b2317f81165">
 
@@ -47,6 +49,8 @@ The following repository contains all of the necessary hardware, software, TTN i
 - Open the default example in Arduino IDE found in subfolder XXXX 
 - Copy and paste the correct JoinEUI, DevEUI, and AppKEY created earlier under "_Registering a new device_"
   + This can be found on lines 42 - 46 of the example *.ino file provided.
+ 
+  + see image below
 
 <img width="1014" alt="Screen Shot 2023-12-31 at 7 38 50 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/57915dc0-3765-45ae-9dca-cd9d032ed345">
 
