@@ -11,10 +11,11 @@ The following repository contains all of the necessary hardware, software, TTN i
 - manufactured by https://www.pcbway.com
 - production settings:
   + 24.9 x 10.5 mm, 2 layers, 0.4 mm FR4, 0.2 mm min hole size, immersion gold (ENIG) surface finish (1U"), 0.06 mm min track spacing, 1 oz Cu finished copper
-    
-# 2. Programming 
 
-![image3](https://github.com/trollock/solar-lorawan/assets/11556670/c9345875-1c5f-4257-aaa9-741a5b0408fa)
+# 2. LoRaWAN Network IDs 
+- 
+    
+# 3. Programming 
 
 - programmed using a combination of Arduino, STM32CubeProgrammer, and an ST-Link.
   + *.elf files are first generated in Arduino, then loaded into STM32CubeProgrammer connected via an ST-Link 
@@ -32,17 +33,21 @@ The following repository contains all of the necessary hardware, software, TTN i
   + click "Open File" in STM32CubeProgrammer and find the location of the *.elf file generated earlier by Arduino
   + click "Download" in STM32CubeProgrammer and wait ~ 2-3 seconds until finished 
   + click "Disconnect" in STM32CubeProgrammer
+ 
+  + see image below
+ 
+  ![compile](https://github.com/trollock/solar-lorawan/assets/11556670/dce051d2-2a14-4cbf-ad8e-1987627be524)
 
-# 3. 3D Printed Housing
+# 4. 3D Printed Housing
 
 - design files for 3D printed housings found in subfolder https://github.com/trollock/solar-lorawan/tree/main/6_housings
 - printed on Formlabs Form 3+ / 3B+ at a 0.05 mm micron layer height
 - *.stl file sliced in Preform 3.33.1 
 
-# 4. Assembly
+# 5. Assembly
 
-# 5. Data compression algorithm
+# 6. Data compression algorithm
 
-# 6. Data Access
+# 7. Data Access
 
 - files for accessing stored
