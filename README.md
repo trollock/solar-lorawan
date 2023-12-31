@@ -13,7 +13,22 @@ The following repository contains all of the necessary hardware, software, TTN i
   + 24.9 x 10.5 mm, 2 layers, 0.4 mm FR4, 0.2 mm min hole size, immersion gold (ENIG) surface finish (1U"), 0.06 mm min track spacing, 1 oz Cu finished copper
 
 # 2. LoRaWAN Network IDs 
-- 
+
+- Example based on connecting to The Things Network (TTN) for Europe EU868 Band
+- Create a free TTN User account (not the Things Stack)
+  + Become familiar with the basics of LoRaWAN https://www.thethingsnetwork.org/docs/lorawan/
+
+- Create an application for your devices
+
+- Registering a new device
+  + Click "_Enter the device specifics manually_" radio button
+  + Click the frequency plan "_Europe 863-870 MHz (SF9 for RX2 - recommended)_"
+  + Click the LoRaWAN version "_LoRaWAN Specification 1.0.2_"
+  + Click the Regional Parameters version "_RP001 Regional Parameters 1.0.2 revision B_"
+  + Create a unique 64 bit JoinEUI for your device (can be shared amongst devices, can be random)
+  + Click "_Generate_" to create a 64-bit random DevEUI
+  + Click "_Generate_" to create a 128-bit random AppKEY (can be shared amongst devices)
+  + Click "_Register End Device_" to create your new device
     
 # 3. Programming 
 
