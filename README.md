@@ -33,7 +33,7 @@ The following repository contains all of the necessary hardware, software, TTN i
     + Keep the JoinEUI, DevEUI, and AppKEY to copy into the Arduino example file  
   + Click "_Register End Device_" to create your new device
   
-  + see image below 
+  + see example image below 
 
 <img width="818" alt="Screen Shot 2023-12-31 at 3 21 52 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/91a278fa-6ada-405c-8e89-6b2317f81165">
 
@@ -52,7 +52,7 @@ The following repository contains all of the necessary hardware, software, TTN i
 - Copy and paste the correct JoinEUI, DevEUI, and AppKEY created earlier under "_Registering a new device_"
   + This can be found on lines 42 - 46 of the example *.ino file provided.
  
-  + see image below
+  + see example image below
 
 <img width="1014" alt="Screen Shot 2023-12-31 at 7 38 50 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/57915dc0-3765-45ae-9dca-cd9d032ed345">
 
@@ -64,7 +64,7 @@ The following repository contains all of the necessary hardware, software, TTN i
   + click "Download" in STM32CubeProgrammer and wait ~ 2-3 seconds until finished 
   + click "Disconnect" in STM32CubeProgrammer
  
-  + see image below
+  + see example image below
  
   ![compile](https://github.com/trollock/solar-lorawan/assets/11556670/dce051d2-2a14-4cbf-ad8e-1987627be524)
 
@@ -87,6 +87,27 @@ The following repository contains all of the necessary hardware, software, TTN i
 # 6. Data Access
 
 - log into your new TTN account and click on your application
-- 
 
+- Payload Formatter
+  + copy the data from the file "payload_formatter_uplink.txt" in the subfolder 2_scripts https://github.com/trollock/solar-lorawan/tree/main/2_scripts
+  + click "formatter type" and select Custom Javascript formatter.
+  + Delete the code in the paylod formatter box
+  + Paste the data from the file "payload_formatter_uplink.txt"
+  + Click "Save Changes"
+
+  + see example image below
+    
+<img width="793" alt="Screen Shot 2024-02-09 at 1 27 04 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/c374ceef-fe46-4c9f-a58a-26451f527281">
+
+- Storage Integration
+  + Click on the leftside menu "Integrations" and then click "Storage Integration"
+  + Cliack on the radio button "Activate Storage Integration"
+  + The status should say "The storage integration is currently activated"
+
+- API Keys
+  + API keys are used for accessing the storage API in a secure manner from another process or service (e.g. [R] )
+  + Click the radio button "+ Add API Key"
+  + Save this information in a secure place for later
+ 
+- 
 - files for accessing stored
