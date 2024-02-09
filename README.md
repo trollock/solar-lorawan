@@ -48,7 +48,7 @@ The following repository contains all of the necessary hardware, software, TTN i
 
 ## Basic programming example
 
-- Open the default example in Arduino IDE found in subfolder XXXX 
+- Open the default example in Arduino IDE found in subfolder "sample_software" https://github.com/trollock/solar-lorawan/tree/main/4_software
 - Copy and paste the correct JoinEUI, DevEUI, and AppKEY created earlier under "_Registering a new device_"
   + This can be found on lines 42 - 46 of the example *.ino file provided.
  
