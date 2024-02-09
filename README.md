@@ -54,7 +54,7 @@ The following repository contains all of the necessary hardware, software, TTN i
  
   + see example image below
 
-<img width="1014" alt="Screen Shot 2023-12-31 at 7 38 50 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/57915dc0-3765-45ae-9dca-cd9d032ed345">
+<img width="1015" alt="Screen Shot 2024-02-09 at 1 42 21 PM" src="https://github.com/trollock/solar-lorawan/assets/11556670/0e7e3544-53ca-4ae1-9cc9-881eca0b7467">
 
   + click "verify" and then find path to location of *.elf file
   + before opening STM32CubePorgrammer, connect the ST-Link to a suitable port
